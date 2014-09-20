@@ -2213,7 +2213,7 @@ static int32_t procthmap(int64_t rnum, bool rnd, int64_t bnum) {
   for (int64_t i = 1; !err && i <= rnum; i++) {
     char kbuf[RECBUFSIZ];
     size_t ksiz = std::sprintf(kbuf, "%08lld", (long long)(rnd ? myrand(rnum) + 1 : i));
-    size_t vsiz;
+    size_t vsiz = 0;
     const char* vbuf = map.get(kbuf, ksiz, &vsiz);
     if (!vbuf && !rnd) {
       errprint(__LINE__, "TinyHashMap::get: %s", kbuf);

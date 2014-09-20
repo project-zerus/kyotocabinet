@@ -13,9 +13,9 @@
  *************************************************************************************************/
 
 
-#include "kcpolydb.h"
-#include "kcdbext.h"
-#include "kclangc.h"
+#include "kyotocabinet/kcpolydb.h"
+#include "kyotocabinet/kcdbext.h"
+#include "kyotocabinet/kclangc.h"
 #include "myconf.h"
 
 using namespace kyotocabinet;

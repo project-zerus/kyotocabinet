@@ -13,7 +13,7 @@
  *************************************************************************************************/
 
 
-#include "kcstashdb.h"
+#include "kyotocabinet/kcstashdb.h"
 #include "myconf.h"
 
 namespace kyotocabinet {                 // common namespace

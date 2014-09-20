@@ -16,16 +16,16 @@
 #ifndef _KCDIRDB_H                       // duplication check
 #define _KCDIRDB_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
-#include <kcfile.h>
-#include <kccompress.h>
-#include <kccompare.h>
-#include <kcmap.h>
-#include <kcregex.h>
-#include <kcdb.h>
-#include <kcplantdb.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
+#include "kyotocabinet/kcfile.h"
+#include "kyotocabinet/kccompress.h"
+#include "kyotocabinet/kccompare.h"
+#include "kyotocabinet/kcmap.h"
+#include "kyotocabinet/kcregex.h"
+#include "kyotocabinet/kcdb.h"
+#include "kyotocabinet/kcplantdb.h"
 
 #define KCDDBMAGICFILE  "__KCDIR__"      ///< magic file of the directory
 #define KCDDBMETAFILE  "__meta__"        ///< meta data file of the directory
@@ -2155,7 +2155,7 @@ class DirDB : public BasicDB {
           const std::string& rpath = path + File::PATHCHR + name;
           Record rec;
           if (db->read_record(rpath, &rec)) {
-            size_t vsiz;
+            size_t vsiz = 0;
             visitor->visit_full(rec.kbuf, rec.ksiz, rec.vbuf, rec.vsiz, &vsiz);
             delete[] rec.rbuf;
           } else {

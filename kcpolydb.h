@@ -16,22 +16,22 @@
 #ifndef _KCPOLYDB_H                      // duplication check
 #define _KCPOLYDB_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
-#include <kcfile.h>
-#include <kccompress.h>
-#include <kccompare.h>
-#include <kcmap.h>
-#include <kcregex.h>
-#include <kcdb.h>
-#include <kcplantdb.h>
-#include <kcprotodb.h>
-#include <kcstashdb.h>
-#include <kccachedb.h>
-#include <kchashdb.h>
-#include <kcdirdb.h>
-#include <kctextdb.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
+#include "kyotocabinet/kcfile.h"
+#include "kyotocabinet/kccompress.h"
+#include "kyotocabinet/kccompare.h"
+#include "kyotocabinet/kcmap.h"
+#include "kyotocabinet/kcregex.h"
+#include "kyotocabinet/kcdb.h"
+#include "kyotocabinet/kcplantdb.h"
+#include "kyotocabinet/kcprotodb.h"
+#include "kyotocabinet/kcstashdb.h"
+#include "kyotocabinet/kccachedb.h"
+#include "kyotocabinet/kchashdb.h"
+#include "kyotocabinet/kcdirdb.h"
+#include "kyotocabinet/kctextdb.h"
 
 namespace kyotocabinet {                 // common namespace
 

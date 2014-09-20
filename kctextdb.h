@@ -16,15 +16,15 @@
 #ifndef _KCTEXTDB_H                      // duplication check
 #define _KCTEXTDB_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
-#include <kcfile.h>
-#include <kccompress.h>
-#include <kccompare.h>
-#include <kcmap.h>
-#include <kcregex.h>
-#include <kcdb.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
+#include "kyotocabinet/kcfile.h"
+#include "kyotocabinet/kccompress.h"
+#include "kyotocabinet/kccompare.h"
+#include "kyotocabinet/kcmap.h"
+#include "kyotocabinet/kcregex.h"
+#include "kyotocabinet/kcdb.h"
 
 namespace kyotocabinet {                 // common namespace
 
@@ -246,7 +246,7 @@ class TextDB : public BasicDB {
       const Record& rec = queue_.front();
       char kbuf[NUMBUFSIZ];
       size_t ksiz = db_->write_key(kbuf, rec.first);
-      size_t vsiz;
+      size_t vsiz = 0;
       const char* vbuf = visitor->visit_full(kbuf, ksiz,
                                              rec.second.data(), rec.second.size(), &vsiz);
       if (vbuf != Visitor::NOP && vbuf != Visitor::REMOVE) {
@@ -901,7 +901,7 @@ class TextDB : public BasicDB {
   bool accept_impl(const char* kbuf, size_t ksiz, Visitor* visitor) {
     _assert_(kbuf && ksiz <= MEMMAXSIZ && visitor);
     bool err = false;
-    size_t vsiz;
+    size_t vsiz = 0;
     const char* vbuf = visitor->visit_empty(kbuf, ksiz, &vsiz);
     if (vbuf != Visitor::NOP && vbuf != Visitor::REMOVE) {
       size_t rsiz = vsiz + 1;
@@ -952,8 +952,8 @@ class TextDB : public BasicDB {
         if (*rp == '\n') {
           char kbuf[NUMBUFSIZ];
           size_t ksiz = write_key(kbuf, off + pv - stack);
-          const char* vbuf;
-          size_t vsiz;
+          const char* vbuf = 0;
+          size_t vsiz = 0;
           if (line.empty()) {
             vbuf = visitor->visit_full(kbuf, ksiz, pv, rp - pv, &vsiz);
           } else {
@@ -1086,11 +1086,11 @@ class TextDB : public BasicDB {
                 char kbuf[NUMBUFSIZ];
                 size_t ksiz = db->write_key(kbuf, off + pv - stack);
                 if (line.empty()) {
-                  size_t vsiz;
+                  size_t vsiz = 0;
                   visitor->visit_full(kbuf, ksiz, pv, rp - pv, &vsiz);
                 } else {
                   line.append(pv, rp - pv);
-                  size_t vsiz;
+                  size_t vsiz = 0;
                   visitor->visit_full(kbuf, ksiz, line.data(), line.size(), &vsiz);
                   line.clear();
                 }

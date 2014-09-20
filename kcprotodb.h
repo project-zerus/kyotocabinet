@@ -16,16 +16,16 @@
 #ifndef _KCPROTODB_H                     // duplication check
 #define _KCPROTODB_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
-#include <kcfile.h>
-#include <kccompress.h>
-#include <kccompare.h>
-#include <kcmap.h>
-#include <kcregex.h>
-#include <kcdb.h>
-#include <kcplantdb.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
+#include "kyotocabinet/kcfile.h"
+#include "kyotocabinet/kccompress.h"
+#include "kyotocabinet/kccompare.h"
+#include "kyotocabinet/kcmap.h"
+#include "kyotocabinet/kcregex.h"
+#include "kyotocabinet/kcdb.h"
+#include "kyotocabinet/kcplantdb.h"
 
 namespace kyotocabinet {                 // common namespace
 
@@ -111,7 +111,7 @@ class ProtoDB : public BasicDB {
       }
       const std::string& key = it_->first;
       const std::string& value = it_->second;
-      size_t vsiz;
+      size_t vsiz = 0;
       const char* vbuf = visitor->visit_full(key.data(), key.size(),
                                              value.data(), value.size(), &vsiz);
       if (vbuf == Visitor::REMOVE) {
@@ -388,7 +388,7 @@ class ProtoDB : public BasicDB {
       std::string key(kbuf, ksiz);
       typename STRMAP::iterator it = recs_.find(key);
       if (it == recs_.end()) {
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_empty(kbuf, ksiz, &vsiz);
         if (vbuf != Visitor::NOP && vbuf != Visitor::REMOVE) {
           if (tran_) {
@@ -400,7 +400,7 @@ class ProtoDB : public BasicDB {
         }
       } else {
         const std::string& value = it->second;
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_full(kbuf, ksiz, value.data(), value.size(), &vsiz);
         if (vbuf == Visitor::REMOVE) {
           if (tran_) {
@@ -438,7 +438,7 @@ class ProtoDB : public BasicDB {
       const STRMAP& rrecs = recs_;
       typename STRMAP::const_iterator it = rrecs.find(key);
       if (it == rrecs.end()) {
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_empty(kbuf, ksiz, &vsiz);
         if (vbuf != Visitor::NOP && vbuf != Visitor::REMOVE) {
           set_error(_KCCODELINE_, Error::NOPERM, "permission denied");
@@ -446,7 +446,7 @@ class ProtoDB : public BasicDB {
         }
       } else {
         const std::string& value = it->second;
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_full(kbuf, ksiz, value.data(), value.size(), &vsiz);
         if (vbuf != Visitor::NOP && vbuf != Visitor::REMOVE) {
           set_error(_KCCODELINE_, Error::NOPERM, "permission denied");
@@ -486,7 +486,7 @@ class ProtoDB : public BasicDB {
       const std::string& key = *kit;
       typename STRMAP::iterator it = recs_.find(key);
       if (it == recs_.end()) {
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_empty(key.data(), key.size(), &vsiz);
         if (vbuf != Visitor::NOP && vbuf != Visitor::REMOVE) {
           if (tran_) {
@@ -498,7 +498,7 @@ class ProtoDB : public BasicDB {
         }
       } else {
         const std::string& value = it->second;
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_full(key.data(), key.size(),
                                                value.data(), value.size(), &vsiz);
         if (vbuf == Visitor::REMOVE) {
@@ -563,7 +563,7 @@ class ProtoDB : public BasicDB {
     while (it != itend) {
       const std::string& key = it->first;
       const std::string& value = it->second;
-      size_t vsiz;
+      size_t vsiz = 0;
       const char* vbuf = visitor->visit_full(key.data(), key.size(),
                                              value.data(), value.size(), &vsiz);
       if (vbuf == Visitor::REMOVE) {

@@ -1,4 +1,4 @@
-#include <kcprotodb.h>
+#include "kyotocabinet/kcprotodb.h"
 
 using namespace std;
 using namespace kyotocabinet;

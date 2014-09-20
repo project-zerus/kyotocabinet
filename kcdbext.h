@@ -16,22 +16,22 @@
 #ifndef _KCDBEXT_H                       // duplication check
 #define _KCDBEXT_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
-#include <kcfile.h>
-#include <kccompress.h>
-#include <kccompare.h>
-#include <kcmap.h>
-#include <kcregex.h>
-#include <kcdb.h>
-#include <kcplantdb.h>
-#include <kcprotodb.h>
-#include <kcstashdb.h>
-#include <kccachedb.h>
-#include <kchashdb.h>
-#include <kcdirdb.h>
-#include <kcpolydb.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
+#include "kyotocabinet/kcfile.h"
+#include "kyotocabinet/kccompress.h"
+#include "kyotocabinet/kccompare.h"
+#include "kyotocabinet/kcmap.h"
+#include "kyotocabinet/kcregex.h"
+#include "kyotocabinet/kcdb.h"
+#include "kyotocabinet/kcplantdb.h"
+#include "kyotocabinet/kcprotodb.h"
+#include "kyotocabinet/kcstashdb.h"
+#include "kyotocabinet/kccachedb.h"
+#include "kyotocabinet/kchashdb.h"
+#include "kyotocabinet/kcdirdb.h"
+#include "kyotocabinet/kcpolydb.h"
 
 namespace kyotocabinet {                 // common namespace
 
@@ -1278,7 +1278,7 @@ class IndexDB {
     if (omode_ == 0) {
       set_error(_KCCODELINE_, BasicDB::Error::INVALID, "not opened");
       *sp = 0;
-      return false;
+      return NULL;
     }
     if (!cache_) return db_.get(kbuf, ksiz, sp);
     size_t dvsiz = 0;
@@ -1362,7 +1362,7 @@ class IndexDB {
    */
   bool get(const std::string& key, std::string* value) {
     _assert_(value);
-    size_t vsiz;
+    size_t vsiz = 0;
     char* vbuf = get(key.c_str(), key.size(), &vsiz);
     if (!vbuf) return false;
     value->clear();
@@ -1621,7 +1621,7 @@ class IndexDB {
     char vbuf;
     if (db_.get(kbuf, ksiz, &vbuf, 1) >= 0) return true;
     if (cache_) {
-      size_t vsiz;
+      size_t vsiz = 0;
       if (cache_->get(kbuf, ksiz, &vsiz)) return true;
       if (tmpdbs_) {
         for (size_t i = 0; i < dbnum_; i++) {

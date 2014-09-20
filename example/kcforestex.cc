@@ -1,4 +1,4 @@
-#include <kcdirdb.h>
+#include "kyotocabinet/kcdirdb.h"
 
 using namespace std;
 using namespace kyotocabinet;

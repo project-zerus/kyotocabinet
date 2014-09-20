@@ -1,5 +1,5 @@
-#include <kcpolydb.h>
-#include <kcdbext.h>
+#include "kyotocabinet/kcpolydb.h"
+#include "kyotocabinet/kcdbext.h"
 
 using namespace std;
 using namespace kyotocabinet;

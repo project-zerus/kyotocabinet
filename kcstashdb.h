@@ -16,16 +16,16 @@
 #ifndef _KCSTASHDB_H                     // duplication check
 #define _KCSTASHDB_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
-#include <kcfile.h>
-#include <kccompress.h>
-#include <kccompare.h>
-#include <kcmap.h>
-#include <kcregex.h>
-#include <kcdb.h>
-#include <kcplantdb.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
+#include "kyotocabinet/kcfile.h"
+#include "kyotocabinet/kccompress.h"
+#include "kyotocabinet/kccompare.h"
+#include "kyotocabinet/kcmap.h"
+#include "kyotocabinet/kcregex.h"
+#include "kyotocabinet/kcdb.h"
+#include "kyotocabinet/kcplantdb.h"
 
 namespace kyotocabinet {                 // common namespace
 
@@ -115,7 +115,7 @@ class StashDB : public BasicDB {
         return false;
       }
       Record rec(rbuf_);
-      size_t vsiz;
+      size_t vsiz = 0;
       const char* vbuf = visitor->visit_full(rec.kbuf_, rec.ksiz_, rec.vbuf_, rec.vsiz_, &vsiz);
       if (vbuf == Visitor::REMOVE) {
         Repeater repeater(Visitor::REMOVE, 0);
@@ -463,7 +463,7 @@ class StashDB : public BasicDB {
         curcnt++;
         Record rec(rbuf);
         rbuf = rec.child_;
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_full(rec.kbuf_, rec.ksiz_,
                                                rec.vbuf_, rec.vsiz_, &vsiz);
         if (vbuf == Visitor::REMOVE) {
@@ -542,7 +542,7 @@ class StashDB : public BasicDB {
           while (rbuf) {
             Record rec(rbuf);
             rbuf = rec.child_;
-            size_t vsiz;
+            size_t vsiz = 0;
             visitor->visit_full(rec.kbuf_, rec.ksiz_, rec.vbuf_, rec.vsiz_, &vsiz);
             if (checker && !checker->check("scan_parallel", "processing", -1, allcnt)) {
               db->set_error(_KCCODELINE_, Error::LOGIC, "checker failed");
@@ -1289,7 +1289,7 @@ class StashDB : public BasicDB {
     while (rbuf) {
       Record rec(rbuf);
       if (rec.ksiz_ == ksiz && !std::memcmp(rec.kbuf_, kbuf, ksiz)) {
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_full(rec.kbuf_, rec.ksiz_,
                                                rec.vbuf_, rec.vsiz_, &vsiz);
         if (vbuf == Visitor::REMOVE) {
@@ -1327,7 +1327,7 @@ class StashDB : public BasicDB {
       entp = (char**)rbuf;
       rbuf = rec.child_;
     }
-    size_t vsiz;
+    size_t vsiz = 0;
     const char* vbuf = visitor->visit_empty(kbuf, ksiz, &vsiz);
     if (vbuf != Visitor::REMOVE && vbuf != Visitor::NOP) {
       if (tran_) {

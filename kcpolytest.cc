@@ -13,8 +13,8 @@
  *************************************************************************************************/
 
 
-#include <kcpolydb.h>
-#include <kcdbext.h>
+#include "kyotocabinet/kcpolydb.h"
+#include "kyotocabinet/kcdbext.h"
 #include "cmdcommon.h"
 
 
@@ -702,7 +702,7 @@ static int32_t procorder(const char* path, int64_t rnum, int32_t thnum, bool rnd
                 break;
               }
               default: {
-                size_t vsiz;
+                size_t vsiz = 0;
                 char* vbuf = db_->get(kbuf, ksiz, &vsiz);
                 if (vbuf) {
                   delete[] vbuf;
@@ -924,7 +924,7 @@ static int32_t procorder(const char* path, int64_t rnum, int32_t thnum, bool rnd
           char kbuf[RECBUFSIZ];
           size_t ksiz = std::sprintf(kbuf, "%08lld",
                                      (long long)(rnd_ ? myrand(range) + 1 : base + i));
-          size_t vsiz;
+          size_t vsiz = 0;
           char* vbuf = db_->get(kbuf, ksiz, &vsiz);
           if (vbuf) {
             if (vsiz < ksiz || std::memcmp(vbuf, kbuf, ksiz)) {
@@ -1029,7 +1029,7 @@ static int32_t procorder(const char* path, int64_t rnum, int32_t thnum, bool rnd
                 break;
               }
               default: {
-                size_t vsiz;
+                size_t vsiz = 0;
                 char* vbuf = db_->get(kbuf, ksiz, &vsiz);
                 if (vbuf) {
                   delete[] vbuf;
@@ -1500,7 +1500,7 @@ static int32_t procorder(const char* path, int64_t rnum, int32_t thnum, bool rnd
                 break;
               }
               default: {
-                size_t vsiz;
+                size_t vsiz = 0;
                 char* vbuf = db_->get(kbuf, ksiz, &vsiz);
                 if (vbuf) {
                   delete[] vbuf;
@@ -2353,8 +2353,8 @@ static int32_t procmapred(const char* path, int64_t rnum, bool rnd, bool ru, int
       return emit(vbuf, vsiz, kbuf, ksiz);
     }
     bool reduce(const char* kbuf, size_t ksiz, ValueIterator* iter) {
-      const char* vbuf;
-      size_t vsiz;
+      const char* vbuf = NULL;
+      size_t vsiz = 0;
       while ((vbuf = iter->next(&vsiz)) != NULL) {
         redcnt_.add(1);
       }
@@ -2572,7 +2572,7 @@ static int32_t procindex(const char* path, int64_t rnum, int32_t thnum, bool rnd
               break;
             }
             default: {
-              size_t vsiz;
+              size_t vsiz = 0;
               char* vbuf = db_->get(kbuf, ksiz, &vsiz);
               if (vbuf) {
                 delete[] vbuf;
@@ -2646,7 +2646,7 @@ static int32_t procindex(const char* path, int64_t rnum, int32_t thnum, bool rnd
           char kbuf[RECBUFSIZ];
           size_t ksiz = std::sprintf(kbuf, "%08lld",
                                      (long long)(rnd_ ? myrand(range) + 1 : base + i));
-          size_t vsiz;
+          size_t vsiz = 0;
           char* vbuf = db_->get(kbuf, ksiz, &vsiz);
           if (vbuf) {
             if (vsiz < ksiz || std::memcmp(vbuf, kbuf, ksiz)) {
@@ -2802,7 +2802,7 @@ static int32_t procmisc(const char* path) {
     char kbuf[RECBUFSIZ];
     size_t ksiz = std::sprintf(kbuf, "%08lld", (long long)i);
     if (i % 3 == 0) {
-      size_t vsiz;
+      size_t vsiz = 0;
       char* vbuf = db->get(kbuf, ksiz, &vsiz);
       if (vbuf) {
         delete[] vbuf;
@@ -2838,7 +2838,7 @@ static int32_t procmisc(const char* path) {
         break;
       }
       case 1: {
-        size_t vsiz;
+        size_t vsiz = 0;
         char* vbuf = cur->get_value(&vsiz, i % 2 == 0);
         if (vbuf) {
           delete[] vbuf;
@@ -2849,9 +2849,9 @@ static int32_t procmisc(const char* path) {
         break;
       }
       case 2: {
-        size_t ksiz;
-        const char* vbuf;
-        size_t vsiz;
+        size_t ksiz = 0;
+        const char* vbuf = NULL;
+        size_t vsiz = 0;
         char* kbuf = cur->get(&ksiz, &vbuf, &vsiz, i % 2 == 0);
         if (kbuf) {
           if (ksiz != vsiz || std::memcmp(kbuf, vbuf, ksiz)) {
@@ -2895,9 +2895,9 @@ static int32_t procmisc(const char* path) {
         break;
       }
       case 6: {
-        size_t ksiz;
-        const char* vbuf;
-        size_t vsiz;
+        size_t ksiz = 0;
+        const char* vbuf = 0;
+        size_t vsiz = 0;
         char* kbuf = cur->seize(&ksiz, &vbuf, &vsiz);
         if (kbuf) {
           delete[] kbuf;
@@ -3038,7 +3038,7 @@ static int32_t procmisc(const char* path) {
       for (int64_t i = 0; i < rnum_; i++) {
         char kbuf[RECBUFSIZ];
         size_t ksiz = std::sprintf(kbuf, "%08lld", (long long)i);
-        size_t vsiz;
+        size_t vsiz = 0;
         char* vbuf = db_->get(kbuf, ksiz, &vsiz);
         if (vbuf) {
           delete[] vbuf;

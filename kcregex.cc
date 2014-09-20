@@ -13,7 +13,7 @@
  *************************************************************************************************/
 
 
-#include "kcregex.h"
+#include "kyotocabinet/kcregex.h"
 #include "myconf.h"
 
 #if _KC_PXREGEX

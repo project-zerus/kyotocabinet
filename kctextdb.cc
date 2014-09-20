@@ -13,7 +13,7 @@
  *************************************************************************************************/
 
 
-#include "kctextdb.h"
+#include "kyotocabinet/kctextdb.h"
 #include "myconf.h"
 
 namespace kyotocabinet {                 // common namespace

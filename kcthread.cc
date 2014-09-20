@@ -13,7 +13,7 @@
  *************************************************************************************************/
 
 
-#include "kcthread.h"
+#include "kyotocabinet/kcthread.h"
 #include "myconf.h"
 
 namespace kyotocabinet {                 // common namespace

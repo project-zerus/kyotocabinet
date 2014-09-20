@@ -16,13 +16,13 @@
 #ifndef _KCDB_H                          // duplication check
 #define _KCDB_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
-#include <kcfile.h>
-#include <kccompress.h>
-#include <kccompare.h>
-#include <kcmap.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
+#include "kyotocabinet/kcfile.h"
+#include "kyotocabinet/kccompress.h"
+#include "kyotocabinet/kccompare.h"
+#include "kyotocabinet/kcmap.h"
 
 #define KCDBSSMAGICDATA  "KCSS\n"        ///< The magic data of the snapshot file
 
@@ -693,7 +693,7 @@ class BasicDB : public DB {
         *sp = 0;
         return NULL;
       }
-      size_t vsiz;
+      size_t vsiz = 0;
       char* vbuf = visitor.pop(&vsiz);
       if (!vbuf) {
         *sp = 0;
@@ -709,7 +709,7 @@ class BasicDB : public DB {
      */
     bool get_value(std::string* value, bool step = false) {
       _assert_(value);
-      size_t vsiz;
+      size_t vsiz = 0;
       char* vbuf = get_value(&vsiz, step);
       if (!vbuf) return false;
       value->clear();
@@ -1930,7 +1930,7 @@ class BasicDB : public DB {
       *sp = 0;
       return NULL;
     }
-    size_t vsiz;
+    size_t vsiz = 0;
     char* vbuf = visitor.pop(&vsiz);
     if (!vbuf) {
       set_error(_KCCODELINE_, Error::NOREC, "no record");
@@ -2087,7 +2087,7 @@ class BasicDB : public DB {
       *sp = 0;
       return NULL;
     }
-    size_t vsiz;
+    size_t vsiz = 0;
     char* vbuf = visitor.pop(&vsiz);
     if (!vbuf) {
       set_error(_KCCODELINE_, Error::NOREC, "no record");
@@ -2250,7 +2250,7 @@ class BasicDB : public DB {
     std::vector<std::string>::const_iterator kit = keys.begin();
     std::vector<std::string>::const_iterator kitend = keys.end();
     while (kit != kitend) {
-      size_t vsiz;
+      size_t vsiz = 0;
       const char* vbuf = get(kit->data(), kit->size(), &vsiz);
       if (vbuf) {
         (*recs)[*kit] = std::string(vbuf, vsiz);

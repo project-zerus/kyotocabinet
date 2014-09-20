@@ -1,4 +1,4 @@
-#include <kccachedb.h>
+#include "kyotocabinet/kccachedb.h"
 
 using namespace std;
 using namespace kyotocabinet;

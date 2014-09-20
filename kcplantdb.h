@@ -16,15 +16,15 @@
 #ifndef _KCPLANTDB_H                     // duplication check
 #define _KCPLANTDB_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
-#include <kcfile.h>
-#include <kccompress.h>
-#include <kccompare.h>
-#include <kcmap.h>
-#include <kcregex.h>
-#include <kcdb.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
+#include "kyotocabinet/kcfile.h"
+#include "kyotocabinet/kccompress.h"
+#include "kyotocabinet/kccompare.h"
+#include "kyotocabinet/kcmap.h"
+#include "kyotocabinet/kcregex.h"
+#include "kyotocabinet/kcdb.h"
 
 #define KCPDBMETAKEY  "@"                ///< key of the record for meta data
 #define KCPDBTMPPATHEXT  "tmpkct"        ///< extension of the temporary file
@@ -508,7 +508,7 @@ class PlantDB : public BasicDB {
               rec = *rit;
               char* kbuf = (char*)rec + sizeof(*rec);
               size_t ksiz = rec->ksiz;
-              size_t vsiz;
+              size_t vsiz = 0;
               const char* vbuf = visitor->visit_full(kbuf, ksiz, kbuf + ksiz,
                                                      rec->vsiz, &vsiz);
               if (vbuf == Visitor::REMOVE) {
@@ -706,7 +706,7 @@ class PlantDB : public BasicDB {
         rec = *rit;
         char* kbuf = (char*)rec + sizeof(*rec);
         size_t ksiz = rec->ksiz;
-        size_t vsiz;
+        size_t vsiz = 0;
         const char* vbuf = visitor->visit_full(kbuf, ksiz, kbuf + ksiz,
                                                rec->vsiz, &vsiz);
         if (vbuf == Visitor::REMOVE) {
@@ -2731,7 +2731,7 @@ class PlantDB : public BasicDB {
       Record* rec = *rit;
       char* kbuf = (char*)rec + sizeof(*rec);
       size_t ksiz = rec->ksiz;
-      size_t vsiz;
+      size_t vsiz = 0;
       const char* vbuf = visitor->visit_full(kbuf, ksiz, kbuf + ksiz, rec->vsiz, &vsiz);
       if (vbuf == Visitor::REMOVE) {
         size_t rsiz = sizeof(*rec) + rec->ksiz + rec->vsiz;
@@ -2759,7 +2759,7 @@ class PlantDB : public BasicDB {
     } else {
       const char* kbuf = (char*)rec + sizeof(*rec);
       size_t ksiz = rec->ksiz;
-      size_t vsiz;
+      size_t vsiz = 0;
       const char* vbuf = visitor->visit_empty(kbuf, ksiz, &vsiz);
       if (vbuf != Visitor::NOP && vbuf != Visitor::REMOVE) {
         size_t rsiz = sizeof(*rec) + ksiz + vsiz;
@@ -3719,8 +3719,8 @@ class PlantDB : public BasicDB {
         }
         cur = udb.cursor();
         cur->jump();
-        const char* vbuf;
-        size_t vsiz;
+        const char* vbuf = NULL;
+        size_t vsiz = 0;
         while (!err && (kbuf = cur->get(&ksiz, &vbuf, &vsiz)) != NULL) {
           if (!db_.set(kbuf, ksiz, vbuf, vsiz)) err = true;
           delete[] kbuf;

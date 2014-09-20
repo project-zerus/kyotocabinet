@@ -13,9 +13,9 @@
  *************************************************************************************************/
 
 
-#include <kcutil.h>
-#include <kcpolydb.h>
-#include <kcdbext.h>
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcpolydb.h"
+#include "kyotocabinet/kcdbext.h"
 
 namespace kc = kyotocabinet;
 
@@ -870,7 +870,7 @@ static int32_t procimport(const char* path, const char* srcpath, int32_t zmode) 
       bool err = false;
       std::vector<IndexedRecord> records;
       const char* vbuf;
-      size_t vsiz;
+      size_t vsiz = 0;
       while ((vbuf = iter->next(&vsiz)) != NULL) {
         std::vector<std::string> fields;
         kc::strsplit(std::string(vbuf, vsiz), '\t', &fields);
@@ -1344,10 +1344,10 @@ static int32_t procsearch(const char* path, const char* query, int32_t zmode, in
     if (mode == 'f') qstr.append("\t");
     kc::TreeDB::Cursor* cur = db.cursor();
     cur->jump(qstr);
-    char* kbuf;
-    size_t ksiz;
-    const char* vbuf;
-    size_t vsiz;
+    char* kbuf = 0;
+    size_t ksiz = 0;
+    const char* vbuf = 0;
+    size_t vsiz = 0;
     while (max > 0 && (kbuf = cur->get(&ksiz, &vbuf, &vsiz, true)) != NULL) {
       if (ksiz >= qstr.size() && !std::memcmp(kbuf, qstr.data(), qstr.size())) {
         if (pk) {

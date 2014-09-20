@@ -1,4 +1,4 @@
-#include <kcpolydb.h>
+#include "kyotocabinet/kcpolydb.h"
 
 using namespace std;
 using namespace kyotocabinet;

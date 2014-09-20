@@ -1,4 +1,4 @@
-#include <kchashdb.h>
+#include "kyotocabinet/kchashdb.h"
 
 using namespace std;
 using namespace kyotocabinet;

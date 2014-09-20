@@ -16,9 +16,9 @@
 #ifndef _KCCOMPRESS_H                    // duplication check
 #define _KCCOMPRESS_H
 
-#include <kccommon.h>
-#include <kcutil.h>
-#include <kcthread.h>
+#include "kyotocabinet/kccommon.h"
+#include "kyotocabinet/kcutil.h"
+#include "kyotocabinet/kcthread.h"
 
 namespace kyotocabinet {                 // common namespace
 

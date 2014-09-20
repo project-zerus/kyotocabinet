@@ -13,7 +13,7 @@
  *************************************************************************************************/
 
 
-#include <kcdirdb.h>
+#include "kyotocabinet/kcdirdb.h"
 #include "cmdcommon.h"
 
 
@@ -277,10 +277,10 @@ static int32_t runset(int argc, char** argv) {
     }
   }
   if (!path || !kstr || !vstr) usage();
-  char* kbuf;
-  size_t ksiz;
-  char* vbuf;
-  size_t vsiz;
+  char* kbuf = NULL;
+  size_t ksiz = 0;
+  char* vbuf = NULL;
+  size_t vsiz = 0;
   if (sx) {
     kbuf = kc::hexdecode(kstr, &ksiz);
     kstr = kbuf;
@@ -670,10 +670,10 @@ static int32_t runsetbulk(int argc, char** argv) {
       const char* kstr = argv[i];
       if (++i >= argc) usage();
       const char* vstr = argv[i];
-      char* kbuf;
-      size_t ksiz;
-      char* vbuf;
-      size_t vsiz;
+      char* kbuf = NULL;
+      size_t ksiz = 0;
+      char* vbuf = NULL;
+      size_t vsiz = 0;
       if (sx) {
         kbuf = kc::hexdecode(kstr, &ksiz);
         kstr = kbuf;
@@ -1053,8 +1053,8 @@ static int32_t procget(const char* path, const char* kbuf, size_t ksiz,
     return 1;
   }
   bool err = false;
-  char* vbuf;
-  size_t vsiz;
+  char* vbuf = NULL;
+  size_t vsiz = 0;
   if (rm) {
     vbuf = db.seize(kbuf, ksiz, &vsiz);
   } else {
@@ -1435,9 +1435,9 @@ static int32_t proccheck(const char* path, int32_t oflags) {
   }
   int64_t cnt = 0;
   while (!err) {
-    size_t ksiz;
-    const char* vbuf;
-    size_t vsiz;
+    size_t ksiz = 0;
+    const char* vbuf = NULL;
+    size_t vsiz = 0;
     char* kbuf = cur.get(&ksiz, &vbuf, &vsiz);
     if (kbuf) {
       cnt++;

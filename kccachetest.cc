@@ -13,7 +13,7 @@
  *************************************************************************************************/
 
 
-#include <kccachedb.h>
+#include "kyotocabinet/kccachedb.h"
 #include "cmdcommon.h"
 
 
@@ -535,7 +535,7 @@ static int32_t procorder(int64_t rnum, int32_t thnum, bool rnd, bool etc, bool t
               break;
             }
             default: {
-              size_t vsiz;
+              size_t vsiz = 0;
               char* vbuf = db_->get(kbuf, ksiz, &vsiz);
               if (vbuf) {
                 delete[] vbuf;
@@ -766,7 +766,7 @@ static int32_t procorder(int64_t rnum, int32_t thnum, bool rnd, bool etc, bool t
         char kbuf[RECBUFSIZ];
         size_t ksiz = std::sprintf(kbuf, "%08lld",
                                    (long long)(rnd_ ? myrand(range) + 1 : base + i));
-        size_t vsiz;
+        size_t vsiz = 0;
         char* vbuf = db_->get(kbuf, ksiz, &vsiz);
         if (vbuf) {
           if (vsiz < ksiz || std::memcmp(vbuf, kbuf, ksiz)) {
@@ -867,7 +867,7 @@ static int32_t procorder(int64_t rnum, int32_t thnum, bool rnd, bool etc, bool t
               break;
             }
             default: {
-              size_t vsiz;
+              size_t vsiz = 0;
               char* vbuf = db_->get(kbuf, ksiz, &vsiz);
               if (vbuf) {
                 delete[] vbuf;
@@ -1336,7 +1336,7 @@ static int32_t procorder(int64_t rnum, int32_t thnum, bool rnd, bool etc, bool t
               break;
             }
             default: {
-              size_t vsiz;
+              size_t vsiz = 0;
               char* vbuf = db_->get(kbuf, ksiz, &vsiz);
               if (vbuf) {
                 delete[] vbuf;

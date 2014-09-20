@@ -1,4 +1,4 @@
-#include <kclangc.h>
+#include "kyotocabinet/kclangc.h"
 
 /* call back function for an existing record */
 const char* visitfull(const char* kbuf, size_t ksiz,

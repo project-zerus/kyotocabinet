@@ -13,7 +13,7 @@
  *************************************************************************************************/
 
 
-#include "kcutil.h"
+#include "kyotocabinet/kcutil.h"
 #include "myconf.h"
 
 namespace kyotocabinet {                 // common namespace

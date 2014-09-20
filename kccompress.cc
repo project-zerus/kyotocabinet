@@ -13,7 +13,7 @@
  *************************************************************************************************/
 
 
-#include "kccompress.h"
+#include "kyotocabinet/kccompress.h"
 #include "myconf.h"
 
 #if _KC_ZLIB
